@@ -17,6 +17,7 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 # 导入自定义组件
 from ui.format_config import FormatConfigDialog
+from ui.about_dialog import AboutDialog
 
 # 导入核心模块
 from core.pandoc_converter import PandocConverter
@@ -65,6 +66,13 @@ class PandocGUI(QMainWindow):
         
         # 工具菜单
         tools_menu = menubar.addMenu('工具')
+        
+        # 帮助菜单
+        help_menu = menubar.addMenu('帮助')
+        
+        # 关于与鸣谢
+        about_action = help_menu.addAction('关于与鸣谢')
+        about_action.triggered.connect(self.show_about_dialog)
             
     def init_ui(self):
         """初始化UI"""
@@ -208,4 +216,9 @@ class PandocGUI(QMainWindow):
     def open_format_config_dialog(self):
         """打开排版配置对话框"""
         dialog = FormatConfigDialog(self)
+        dialog.exec_()
+    
+    def show_about_dialog(self):
+        """显示关于与鸣谢对话框"""
+        dialog = AboutDialog(self)
         dialog.exec_()

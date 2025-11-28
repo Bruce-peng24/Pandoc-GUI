@@ -5,10 +5,28 @@ Pandoc GUI 应用程序入口
 
 import sys
 import os
+
 # 添加当前目录到路径，以便导入模块
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
-from PyQt5.QtWidgets import QApplication
+# 尝试导入PyQt5，如果失败则提供错误信息
+try:
+    from PyQt5.QtWidgets import QApplication
+    from PyQt5.QtCore import Qt
+    from PyQt5.QtGui import QIcon
+except ImportError as e:
+    print(f"无法导入PyQt5: {e}")
+    print(f"当前Python路径: {sys.path}")
+    # 在GUI环境中显示错误
+    try:
+        from PyQt5.QtWidgets import QApplication, QMessageBox
+        app = QApplication(sys.argv)
+        QMessageBox.critical(None, "导入错误", f"无法导入PyQt5: {e}\n请检查PyQt5是否正确安装。")
+    except:
+        # 如果连QMessageBox都无法导入，就使用控制台输出
+        pass
+    input("按任意键退出...")
+    sys.exit(1)
 
 # 导入主窗口类
 from ui.main_window import PandocGUI
