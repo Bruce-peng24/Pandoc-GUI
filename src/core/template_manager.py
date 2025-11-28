@@ -104,7 +104,7 @@ class TemplateManager:
         basic_text.first_line_indent_spin.setValue(2.0)
         basic_text.line_spacing_combo.setCurrentText("1.5")
         basic_text.paragraph_spacing_spin.setValue(6)
-        basic_text.justify_radio.setChecked(True)
+        basic_text.left_radio.setChecked(True)
         
         # 标题样式
         widgets['heading'].apply_academic_template()
@@ -125,7 +125,7 @@ class TemplateManager:
         basic_text.first_line_indent_spin.setValue(2.0)
         basic_text.line_spacing_combo.setCurrentText("1.5")
         basic_text.paragraph_spacing_spin.setValue(6)
-        basic_text.justify_radio.setChecked(True)
+        basic_text.left_radio.setChecked(True)
         
         # 标题样式
         widgets['heading'].apply_report_template()
@@ -143,7 +143,7 @@ class TemplateManager:
         basic_text.first_line_indent_spin.setValue(2.0)
         basic_text.line_spacing_combo.setCurrentText("1.5")
         basic_text.paragraph_spacing_spin.setValue(6)
-        basic_text.justify_radio.setChecked(True)
+        basic_text.left_radio.setChecked(True)
         
         # 标题样式
         widgets['heading'].apply_novel_template()
@@ -187,7 +187,7 @@ class TemplateManager:
         basic_text.number_font_combo.setCurrentFont(QFont("Times New Roman"))
         basic_text.paragraph_font_combo.setCurrentFont(QFont("宋体"))
         basic_text.body_font_combo.setCurrentFont(QFont("宋体"))
-        basic_text.justify_radio.setChecked(True)
+        basic_text.left_radio.setChecked(True)
         
         # 标题样式默认值
         widgets['heading'].load_default_config()

@@ -62,11 +62,7 @@ class PandocGUI(QMainWindow):
         
         # 工具菜单
         tools_menu = menubar.addMenu('工具')
-        
-        # 排版配置菜单项
-        format_config_action = tools_menu.addAction('排版配置')
-        format_config_action.triggered.connect(self.open_format_config_dialog)
-    
+            
     def init_ui(self):
         """初始化UI"""
         # 创建菜单栏

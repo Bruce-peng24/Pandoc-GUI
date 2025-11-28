@@ -125,7 +125,7 @@ class BasicTextWidget(QWidget):
         self.center_radio = QRadioButton("居中对齐")
         self.right_radio = QRadioButton("右对齐")
         self.justify_radio = QRadioButton("两端对齐")
-        self.justify_radio.setChecked(True)
+        self.left_radio.setChecked(True)
         
         self.align_group.addButton(self.left_radio, 0)
         self.align_group.addButton(self.center_radio, 1)
@@ -209,7 +209,7 @@ class BasicTextWidget(QWidget):
             self.line_spacing_combo.setCurrentText(str(format_.get('line_spacing', 1.5)))
             self.paragraph_spacing_spin.setValue(format_.get('paragraph_spacing', 6))
             
-            alignment = format_.get('alignment', 3)
+            alignment = format_.get('alignment', 0)
             if alignment == 0:
                 self.left_radio.setChecked(True)
             elif alignment == 1:

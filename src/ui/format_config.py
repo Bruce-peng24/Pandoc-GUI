@@ -10,7 +10,7 @@ from PyQt5.QtWidgets import (
     QPushButton, QLabel, QFileDialog, QComboBox, QMessageBox, 
     QDialog, QTabWidget, QGroupBox, QGridLayout, QLineEdit,
     QSpinBox, QFontComboBox, QCheckBox, QColorDialog, QFormLayout,
-    QTextEdit, QSplitter, QListWidget, QStackedWidget, QButtonGroup,
+    QTextEdit, QSplitter, QButtonGroup,
     QRadioButton, QScrollArea, QMenuBar, QMenu, QDoubleSpinBox
 )
 from PyQt5.QtCore import Qt, pyqtSignal
@@ -41,7 +41,7 @@ class FormatConfigDialog(QDialog):
     def __init__(self, parent=None):
         super().__init__(parent)
         self.setWindowTitle("排版配置")
-        self.setMinimumSize(800, 600)
+        self.setMinimumSize(1100, 1100)
         self.config = {}
         
         # 初始化管理器
@@ -77,54 +77,23 @@ class FormatConfigDialog(QDialog):
         apply_template_button = QPushButton("应用模板")
         apply_template_button.clicked.connect(self.apply_preset_template)
         template_select_layout.addWidget(apply_template_button)
-        
-        # 导出模板按钮也放在这里
-        export_template_button = QPushButton("导出模板")
-        export_template_button.clicked.connect(self.export_template)
-        template_select_layout.addWidget(export_template_button)
-        
+                
         template_layout.addLayout(template_select_layout)
         
         # 模板预览文本
         self.preview_text = QTextEdit()
         self.preview_text.setReadOnly(True)
-        self.preview_text.setMaximumHeight(120)
+        self.preview_text.setFixedHeight(260)
         self.preview_text.setPlainText("默认模板预览")
         template_layout.addWidget(self.preview_text)
         
         # 添加模板容器到主布局
         main_layout.addWidget(template_container)
         
-        # 创建导航列表和配置区域的水平布局
-        nav_config_layout = QHBoxLayout()
+        # 创建顶部标签页导航和配置区域的垂直布局
+        nav_config_layout = QVBoxLayout()
         
-        # 创建导航列表和配置区域的分割器
-        splitter = QSplitter(Qt.Horizontal)
-        
-        # 创建导航列表
-        self.nav_list = QListWidget()
-        self.nav_list.setMaximumWidth(200)
-        
-        # 添加导航项
-        nav_items = [
-            "基础文本与段落样式",
-            "标题与层级样式", 
-            "列表样式",
-            "引用与交互元素样式",
-            "非文本与布局样式块",
-            "页面设置"
-        ]
-        
-        for item in nav_items:
-            self.nav_list.addItem(item)
-        
-        # 连接导航点击事件
-        self.nav_list.currentRowChanged.connect(self.show_config_section)
-        
-        # 创建配置区域
-        self.config_stack = QStackedWidget()
-        
-        # 创建各配置区域
+        # 初始化所有配置小部件
         self.widgets['basic_text'] = BasicTextWidget()
         self.widgets['heading'] = HeadingWidget()
         self.widgets['list'] = ListWidget()
@@ -136,25 +105,38 @@ class FormatConfigDialog(QDialog):
         self.widgets['reference'].set_color_chooser_callback(self.choose_color)
         self.widgets['layout'].set_color_chooser_callback(self.choose_color)
         
-        # 添加配置区域到堆栈
-        self.config_stack.addWidget(self.widgets['basic_text'])
-        self.config_stack.addWidget(self.widgets['heading'])
-        self.config_stack.addWidget(self.widgets['list'])
-        self.config_stack.addWidget(self.widgets['reference'])
-        self.config_stack.addWidget(self.widgets['layout'])
-        self.config_stack.addWidget(self.widgets['page'])
+        # 创建顶部标签页导航
+        self.tab_widget = QTabWidget()
         
-        # 设置默认选中第一项
-        self.nav_list.setCurrentRow(0)
+        # 创建各配置区域的子标签页
+        # 第一个标签页：基础文本与段落样式
+        basic_text_tab = QWidget()
+        basic_text_layout = QVBoxLayout(basic_text_tab)
         
-        # 添加到分割器
-        splitter.addWidget(self.nav_list)
-        splitter.addWidget(self.config_stack)
-        splitter.setStretchFactor(0, 0)
-        splitter.setStretchFactor(1, 1)
+        # 在基础文本标签页内创建子标签页
+        self.basic_sub_tabs = QTabWidget()
+        self.basic_sub_tabs.addTab(self.widgets['basic_text'], "文本格式")
         
-        # 添加分割器到导航配置布局
-        nav_config_layout.addWidget(splitter)
+        basic_text_layout.addWidget(self.basic_sub_tabs)
+        self.tab_widget.addTab(basic_text_tab, "基础文本与段落样式")
+        
+        # 第二个标签页：标题与层级样式
+        self.tab_widget.addTab(self.widgets['heading'], "标题与层级样式")
+        
+        # 第三个标签页：列表样式
+        self.tab_widget.addTab(self.widgets['list'], "列表样式")
+        
+        # 第四个标签页：引用与交互元素样式
+        self.tab_widget.addTab(self.widgets['reference'], "引用与交互元素样式")
+        
+        # 第五个标签页：非文本与布局样式块
+        self.tab_widget.addTab(self.widgets['layout'], "非文本与布局样式块")
+        
+        # 第六个标签页：页面设置
+        self.tab_widget.addTab(self.widgets['page'], "页面设置")
+        
+        # 添加标签页到导航配置布局
+        nav_config_layout.addWidget(self.tab_widget)
         
         # 添加导航配置布局到主布局
         main_layout.addLayout(nav_config_layout)
@@ -164,16 +146,19 @@ class FormatConfigDialog(QDialog):
         cancel_button = QPushButton("取消")
         cancel_button.clicked.connect(self.reject)
         
+        # 创建导出模板按钮并添加到按钮区域
+        export_template_button = QPushButton("导出模板")
+        export_template_button.clicked.connect(self.export_template)
+    
         button_layout.addStretch()
+        button_layout.addWidget(export_template_button)
         button_layout.addWidget(cancel_button)
         button_layout.addStretch()
         
         # 添加按钮布局到主布局
         main_layout.addLayout(button_layout)
     
-    def show_config_section(self, index):
-        """根据选择的导航项显示对应的配置区域"""
-        self.config_stack.setCurrentIndex(index)
+
     
     def choose_color(self, button):
         """选择颜色"""

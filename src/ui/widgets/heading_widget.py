@@ -66,10 +66,7 @@ class HeadingWidget(QWidget):
             # 对齐方式
             align_combo = QComboBox()
             align_combo.addItems(["左对齐", "居中对齐", "右对齐", "两端对齐"])
-            if level == 1:
-                align_combo.setCurrentText("居中对齐")
-            else:
-                align_combo.setCurrentText("左对齐")
+            align_combo.setCurrentText("左对齐")
             group_layout.addRow("对齐方式:", align_combo)
             
             # 保存控件引用
@@ -123,7 +120,7 @@ class HeadingWidget(QWidget):
             if level_num == 1:
                 controls['size'].setValue(16)
                 controls['bold'].setChecked(True)
-                controls['align'].setCurrentText("居中对齐")
+                controls['align'].setCurrentText("左对齐")
             elif level_num == 2:
                 controls['size'].setValue(14)
                 controls['bold'].setChecked(True)
@@ -144,11 +141,11 @@ class HeadingWidget(QWidget):
             if level_num == 1:
                 controls['size'].setValue(18)
                 controls['bold'].setChecked(True)
-                controls['align'].setCurrentText("居中对齐")
+                controls['align'].setCurrentText("左对齐")
             elif level_num == 2:
                 controls['size'].setValue(16)
                 controls['bold'].setChecked(True)
-                controls['align'].setCurrentText("居中对齐")
+                controls['align'].setCurrentText("左对齐")
             else:
                 controls['size'].setValue(14)
                 controls['bold'].setChecked(True)
@@ -161,11 +158,11 @@ class HeadingWidget(QWidget):
             if level_num == 1:
                 controls['size'].setValue(20)
                 controls['bold'].setChecked(True)
-                controls['align'].setCurrentText("居中对齐")
+                controls['align'].setCurrentText("左对齐")
             elif level_num == 2:
                 controls['size'].setValue(16)
                 controls['bold'].setChecked(True)
-                controls['align'].setCurrentText("居中对齐")
+                controls['align'].setCurrentText("左对齐")
             else:
                 controls['size'].setValue(14)
                 controls['bold'].setChecked(True)
@@ -178,7 +175,7 @@ class HeadingWidget(QWidget):
             if level_num == 1:
                 controls['size'].setValue(18)
                 controls['bold'].setChecked(True)
-                controls['align'].setCurrentText("居中对齐")
+                controls['align'].setCurrentText("左对齐")
             else:
                 controls['size'].setValue(14)
                 controls['bold'].setChecked(True)
@@ -204,7 +201,7 @@ class HeadingWidget(QWidget):
             if level_num == 1:
                 controls['size'].setValue(16)
                 controls['bold'].setChecked(True)
-                controls['align'].setCurrentText("居中对齐")
+                controls['align'].setCurrentText("左对齐")
             elif level_num == 2:
                 controls['size'].setValue(14)
                 controls['bold'].setChecked(True)

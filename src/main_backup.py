@@ -25,7 +25,7 @@ class FormatConfigDialog(QDialog):
     def __init__(self, parent=None):
         super().__init__(parent)
         self.setWindowTitle("排版配置")
-        self.setMinimumSize(800, 600)
+        self.setMinimumSize(800, 780)
         self.config = {}
         
         self.init_ui()
